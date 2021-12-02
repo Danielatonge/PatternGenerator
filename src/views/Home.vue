@@ -16,7 +16,8 @@
               class="rounded-lg"
             ></v-text-field>
           </v-col>
-          <v-col cols="3" md="2" lg="2" xl="1">
+          <v-spacer></v-spacer>
+          <v-col cols="5" md="4" lg="3" xl="2">
             <v-btn
               class="rounded-lg"
               large
@@ -76,11 +77,11 @@
         </v-col>
       </v-row>
     </v-container>
-    <div class="text-center py-10" v-if="patterns.length">
+    <div class="text-center py-10" v-if="patterns">
       <v-pagination
         color="grey"
         v-model="page"
-        :length="paginationLength"
+        :length="10"
         :total-visible="7"
       ></v-pagination>
     </div>
@@ -143,23 +144,17 @@ export default {
     },
     fetchPattern() {
       const filters = {
-        city: this.sort_by_city,
         currentPage: this.page,
         pageSize: this.display_item.value,
-        queryString: this.search,
-        sortBy: this.sort_model.key,
+        //   queryString: this.search,
+        //   sortBy: this.sort_model.key,
       };
       this.$store
         .dispatch("getPatterns", filters)
-        .then(({ paginationLength, numFound }) => {
-          this.paginationLength = paginationLength;
-          this.numFound = numFound;
+        .then(({ pagination, pageSize }) => {
+          this.paginationLength = pagination;
+          this.numFound = pageSize;
         });
-    },
-    goToMapAll() {
-      this.$store
-        .dispatch("showPatternsOnMap", this.patterns)
-        .then(() => this.$router.push({ name: "pattern-map-all" }));
     },
   },
   data() {

@@ -6,14 +6,7 @@
     @mouseout="elevation = '0'"
     @click="goToPattern"
   >
-    <v-img
-      :src="
-        pattern.profilePicture.length
-          ? pattern.profilePicture
-          : require('@/assets/team_room_1.jpg')
-      "
-      height="200px"
-    >
+    <v-img :src="pattern.download_url" height="200px">
       <v-container>
         <v-row class="ma-2">
           <v-btn
@@ -39,13 +32,10 @@
       </v-container>
     </v-img>
     <v-card-title class="pb-5">
-      {{ pattern.title || "Los Angeles Clippers" | patternTitle }}
+      Author: {{ pattern.author || "Los Angeles Clippers" }}
     </v-card-title>
     <v-card-subtitle>
-      {{
-        (pattern.address || "ул. Лермонтова, д. 14, пом. 3, г. Чита")
-          | addressDescription
-      }}
+      {{ pattern.method || "Evolutionary" }}
     </v-card-subtitle>
   </v-card>
 </template>
@@ -108,7 +98,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("pattern", ["maps", "selected_patterns"]),
+    ...mapState(["selected_patterns"]),
     checkPlus() {
       return this.selected ? "mdi-check" : "mdi-plus";
     },

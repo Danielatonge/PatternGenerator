@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://picsum.photos",
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -11,8 +11,8 @@ const api = axios.create({
 });
 
 export default {
-  getPatterns() {
-    return api.get(`/patterns`);
+  getPatterns({ currentPage, pageSize }) {
+    return api.get(`/v2/list?page=${currentPage}&limit=${pageSize}`);
   },
   savePattern(formData) {
     return api.post(`/file/upload`, formData);

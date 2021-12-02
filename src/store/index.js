@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import * as api from '@/service';
+import api from "@/service";
 
 Vue.use(Vuex);
 
@@ -9,8 +9,6 @@ export default new Vuex.Store({
     patterns: [],
     pattern: {},
     selected_patterns: [],
-    pagination: 10,
-    numFound: 0,
   },
   mutations: {
     SET_PATTERNS(state, patterns) {
@@ -40,12 +38,10 @@ export default new Vuex.Store({
         .getPatterns(filters)
         .then((response) => {
           const res = response.data;
-          commit("SET_PATTERNS", res.content);
-          commit("SET_PAGINATION", res.totalPages);
-          commit("SET_NUMFOUND", res.totalElements);
+          commit("SET_PATTERNS", res);
           return {
-            paginationLength: res.totalPages,
-            numFound: res.totalElements,
+            pagination: filters.currentPage,
+            pageSize: res.length,
           };
         })
         .catch((err) => {
